@@ -1,0 +1,49 @@
+{
+  "name": "@mrmartineau/shotframe",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "App Store screenshots from raw simulator captures: a device frame, a heading and a line of copy, rendered at exactly the size the store wants.",
+  "keywords": [
+    "app-store",
+    "screenshots",
+    "fastlane",
+    "ios",
+    "device-frame",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "Zander Martineau <hi@zander.wtf> (https://zander.wtf)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrmartineau/shotframe.git"
+  },
+  "homepage": "https://github.com/mrmartineau/shotframe#readme",
+  "bugs": "https://github.com/mrmartineau/shotframe/issues",
+  "bin": {
+    "shotframe": "bin/shotframe.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./schema.json": "./schema.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "schema.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "biome check --write .",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.10"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "packageManager": "pnpm@11.7.0"
+}

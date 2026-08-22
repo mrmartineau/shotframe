@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/mrmartineau/shotframe/schema.json",
+  "title": "shotframe config",
+  "description": "Config for shotframe, which frames raw simulator captures as App Store screenshots. Comments and trailing commas are allowed.",
+  "type": "object",
+  "required": ["panels"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+
+    "device": {
+      "description": "Canvas size in CSS points plus a scale factor. width × scale by height × scale is the pixel size that comes out, so a preset is chosen to land exactly on a store size with nothing resampled.",
+      "default": "iphone-6.9",
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "iphone-6.9",
+            "iphone-6.7",
+            "iphone-6.5",
+            "iphone-5.5",
+            "ipad-13",
+            "ipad-12.9",
+            "android-phone"
+          ],
+          "enumDescriptions": [
+            "1320 × 2868 — the size App Store Connect requires for iPhone",
+            "1290 × 2796",
+            "1242 × 2688",
+            "1242 × 2208",
+            "2064 × 2752",
+            "2048 × 2732",
+            "1080 × 1920 — Google Play's minimum phone size"
+          ]
+        },
+        {
+          "type": "object",
+          "required": ["width", "height", "scale"],
+          "additionalProperties": false,
+          "properties": {
+            "width": { "type": "number", "exclusiveMinimum": 0 },
+            "height": { "type": "number", "exclusiveMinimum": 0 },
+            "scale": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        }
+      ]
+    },
+
+    "sources": {
+      "type": "string",
+      "description": "Folder of raw captures, relative to this file.",
+      "default": "sources"
+    },
+    "out": {
+      "type": "string",
+      "description": "Where the framed screenshots are written, relative to this file. For fastlane deliver, use fastlane/screenshots/<locale>.",
+      "default": "screenshots"
+    },
+    "chromePath": {
+      "type": ["string", "null"],
+      "description": "A Chromium to render with, if the usual places are wrong. SHOTFRAME_CHROME does the same thing.",
+      "default": null
+    },
+
+    "theme": {
+      "type": "object",
+      "description": "The half that should come from the app's own design tokens. A listing that invents its own palette stops looking like the app it is selling.",
+      "additionalProperties": false,
+      "properties": {
+        "background": {
+          "type": "string",
+          "description": "Any CSS background value, so a stack of gradients is fine."
+        },
+        "fonts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "display": {
+              "type": "string",
+              "description": "CSS font-family list for the heading."
+            },
+            "text": {
+              "type": "string",
+              "description": "CSS font-family list for the eyebrow and body."
+            }
+          }
+        },
+        "colors": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "type": "string" },
+            "heading": { "type": "string" },
+            "body": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "bezel": {
+      "type": "object",
+      "description": "The device frame, in page points. The phone is sized off whatever height the copy leaves, so these describe how it looks at the size it actually renders rather than a scale drawing of a real handset.",
+      "additionalProperties": false,
+      "properties": {
+        "pad": {
+          "type": "number",
+          "description": "Thickness of the bezel around the capture.",
+          "default": 7
+        },
+        "radius": {
+          "type": "number",
+          "description": "Outer corner radius.",
+          "default": 48
+        },
+        "screenRadius": {
+          "type": "number",
+          "description": "Corner radius of the capture inside it.",
+          "default": 41
+        },
+        "background": {
+          "type": "string",
+          "description": "CSS background for the bezel itself."
+        },
+        "shadow": {
+          "type": "string",
+          "description": "CSS box-shadow, which is also where the hairline highlight lives."
+        }
+      }
+    },
+
+    "type": {
+      "type": "object",
+      "description": "Type scale, in points.",
+      "additionalProperties": false,
+      "properties": {
+        "eyebrow": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": { "type": "number" },
+            "leading": { "type": "number" },
+            "weight": { "type": "number" },
+            "tracking": {
+              "type": "number",
+              "description": "letter-spacing in points; negative tightens."
+            },
+            "uppercase": { "type": "boolean" }
+          }
+        },
+        "heading": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": { "type": "number" },
+            "leading": { "type": "number" },
+            "weight": { "type": "number" },
+            "tracking": { "type": "number" }
+          }
+        },
+        "body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": { "type": "number" },
+            "leading": { "type": "number" },
+            "weight": { "type": "number" },
+            "tracking": { "type": "number" },
+            "opacity": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        }
+      }
+    },
+
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "paddingTop": { "type": "number", "default": 54 },
+        "paddingX": { "type": "number", "default": 36 },
+        "gap": {
+          "type": "number",
+          "description": "Space between eyebrow, heading and body.",
+          "default": 12
+        },
+        "stageGap": {
+          "type": "number",
+          "description": "Space between the copy and the phone.",
+          "default": 30
+        },
+        "reservedLines": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Lines of space held for the heading and for the body whether they use them or not. This is what keeps the phone at the same height across the set; copy that needs more fails the build.",
+          "default": 2
+        }
+      }
+    },
+
+    "css": {
+      "type": "string",
+      "description": "Appended after everything else, for the one thing the config didn't foresee."
+    },
+
+    "panels": {
+      "type": "array",
+      "minItems": 1,
+      "description": "The screenshots, in upload order. Order matters twice over: the store shows the first few in search results, and fastlane deliver uploads in filename order — which is why slugs are usually numbered.",
+      "items": {
+        "type": "object",
+        "required": ["slug", "source", "heading"],
+        "additionalProperties": false,
+        "properties": {
+          "slug": {
+            "type": "string",
+            "pattern": "^[\\w.-]+$",
+            "description": "Output filename, without the extension."
+          },
+          "source": {
+            "type": "string",
+            "description": "The raw capture, a file inside `sources`."
+          },
+          "eyebrow": {
+            "type": "string",
+            "description": "Small caps line above the heading. Optional, but give every panel one or none."
+          },
+          "heading": {
+            "type": "string",
+            "description": "Keep it under about 40 characters — two lines is all that fits."
+          },
+          "body": {
+            "type": "string",
+            "description": "Keep it under about 110 characters. Optional, but give every panel one or none."
+          }
+        }
+      }
+    }
+  }
+}
