@@ -35,8 +35,12 @@
     "README.md",
     "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "check": "biome check --write .",
+    "prepublishOnly": "npm test",
     "test": "node --test"
   },
   "devDependencies": {
