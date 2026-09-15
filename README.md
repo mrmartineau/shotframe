@@ -7,6 +7,10 @@ You shoot the screens in the simulator. shotframe puts each one in a bezel
 under some words, on a background taken from your app's own palette, and writes
 the set to `fastlane/screenshots/` ready to upload.
 
+| Moons | Code Buddy | Green Claws |
+|---|---|---|
+| <a href=""><img src="images/01-orbit.png" width="300" alt="Moons" /></a> | <a href="https://zander.wtf/projects/code-buddy"><img src="images/01-write.png" width="300" alt="Code buddy" /></a> |<a href="https://zander.wtf/projects/green-claws"><img src="images/01-garden.png" width="300" alt="Code buddy" /></a> |
+
 ```
 shotframe init      # a config, and a sources/ folder to shoot into
 shotframe           # build the set
