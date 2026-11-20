@@ -17,8 +17,7 @@ import { resolveDevice } from './devices.mjs'
 import { parseJsonc } from './jsonc.mjs'
 import { plural } from './plural.mjs'
 
-const SYSTEM_FONT =
-  '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+const SYSTEM_FONT = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
 
 export const defaults = {
   device: 'iphone-6.9',
@@ -43,8 +42,7 @@ export const defaults = {
     pad: 7,
     radius: 48,
     screenRadius: 41,
-    background:
-      'linear-gradient(155deg, #6a6a70 0%, #26262b 28%, #141418 62%, #55555c 100%)',
+    background: 'linear-gradient(155deg, #6a6a70 0%, #26262b 28%, #141418 62%, #55555c 100%)',
     shadow:
       '0 0 0 .5px rgba(255,255,255,.14), 0 26px 60px rgba(0,0,0,.55), 0 4px 16px rgba(0,0,0,.4)',
   },
@@ -86,8 +84,7 @@ export const defaults = {
   panels: [],
 }
 
-const isObject = (value) =>
-  value !== null && typeof value === 'object' && !Array.isArray(value)
+const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value)
 
 const merge = (base, patch, path, problems, warnings) => {
   const out = { ...base }
@@ -156,9 +153,7 @@ const checkPanels = (panels, problems) => {
 
     for (const key of ['eyebrow', 'body']) {
       if (panel[key] !== undefined && typeof panel[key] !== 'string') {
-        problems.push(
-          `${where}.${key} should be a string if it is there at all.`,
-        )
+        problems.push(`${where}.${key} should be a string if it is there at all.`)
       }
     }
 
@@ -175,14 +170,11 @@ export const loadConfig = (configPath) => {
   try {
     text = readFileSync(configPath, 'utf8')
   } catch {
-    throw new Error(
-      `No config at ${configPath}. Run \`shotframe init\` to write one.`,
-    )
+    throw new Error(`No config at ${configPath}. Run \`shotframe init\` to write one.`)
   }
 
   const raw = parseJsonc(text, configPath)
-  if (!isObject(raw))
-    throw new Error(`${configPath} should hold a JSON object.`)
+  if (!isObject(raw)) throw new Error(`${configPath} should hold a JSON object.`)
 
   const problems = []
   const warnings = []
@@ -211,10 +203,7 @@ export const loadConfig = (configPath) => {
   for (const key of ['paddingTop', 'paddingX', 'gap', 'stageGap']) {
     checkNumber(config.layout[key], `layout.${key}`, problems)
   }
-  if (
-    !Number.isInteger(config.layout.reservedLines) ||
-    config.layout.reservedLines < 1
-  ) {
+  if (!Number.isInteger(config.layout.reservedLines) || config.layout.reservedLines < 1) {
     problems.push('layout.reservedLines should be a whole number, 1 or more.')
   }
 
@@ -238,8 +227,7 @@ export const loadConfig = (configPath) => {
   }
 
   const base = dirname(resolve(configPath))
-  const fromConfig = (value) =>
-    isAbsolute(value) ? value : resolve(base, value)
+  const fromConfig = (value) => (isAbsolute(value) ? value : resolve(base, value))
 
   return {
     ...config,

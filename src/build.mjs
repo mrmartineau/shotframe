@@ -6,13 +6,7 @@
  * damage is easy to miss at thumbnail size. So overflow fails the build rather
  * than shipping.
  */
-import {
-  existsSync,
-  mkdirSync,
-  mkdtempSync,
-  rmSync,
-  writeFileSync,
-} from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -26,8 +20,7 @@ export const selectPanels = (panels, filter) => {
   const needle = filter.toLowerCase()
   return panels.filter(
     (panel) =>
-      panel.slug.toLowerCase().includes(needle) ||
-      panel.source.toLowerCase().includes(needle),
+      panel.slug.toLowerCase().includes(needle) || panel.source.toLowerCase().includes(needle),
   )
 }
 
@@ -50,10 +43,7 @@ const consistencyWarnings = (panels) => {
   return warnings
 }
 
-export const runBuild = (
-  config,
-  { filter = null, onPanel = () => {} } = {},
-) => {
+export const runBuild = (config, { filter = null, onPanel = () => {} } = {}) => {
   const panels = selectPanels(config.panels, filter)
   if (panels.length === 0) {
     throw new Error(`No panel matches "${filter}".`)
@@ -61,9 +51,7 @@ export const runBuild = (
 
   const chrome = makeRunner(findChrome(config.chromePath), config.device)
 
-  const missing = panels.filter(
-    (panel) => !existsSync(join(config.sources, panel.source)),
-  )
+  const missing = panels.filter((panel) => !existsSync(join(config.sources, panel.source)))
   if (missing.length) {
     throw new Error(
       `Missing ${plural(missing.length, 'capture')} in ${config.sources}:\n` +

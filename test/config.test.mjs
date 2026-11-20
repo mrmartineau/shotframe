@@ -11,10 +11,7 @@ const dir = mkdtempSync(join(tmpdir(), 'shotframe-test-'))
 /** Writes a config in its own folder, so relative paths resolve somewhere real. */
 const write = (name, config) => {
   const path = join(dir, `${name}.json`)
-  writeFileSync(
-    path,
-    typeof config === 'string' ? config : JSON.stringify(config),
-  )
+  writeFileSync(path, typeof config === 'string' ? config : JSON.stringify(config))
   return path
 }
 
@@ -23,9 +20,7 @@ const minimal = {
 }
 
 test('fills in defaults and keeps what was given', () => {
-  const config = loadConfig(
-    write('basic', { ...minimal, theme: { colors: { heading: '#abc' } } }),
-  )
+  const config = loadConfig(write('basic', { ...minimal, theme: { colors: { heading: '#abc' } } }))
   assert.equal(config.theme.colors.heading, '#abc')
   assert.equal(config.layout.reservedLines, 2)
   // A partial nested object patches rather than replaces.
@@ -81,9 +76,7 @@ test('rejects a misspelled panel key outright', () => {
     () =>
       loadConfig(
         write('panelkey', {
-          panels: [
-            { slug: '01', source: 'a.png', heading: 'Hi', headline: 'x' },
-          ],
+          panels: [{ slug: '01', source: 'a.png', heading: 'Hi', headline: 'x' }],
         }),
       ),
     /headline is not an option/,

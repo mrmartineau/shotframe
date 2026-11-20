@@ -41,7 +41,6 @@ test('an unterminated block comment runs to the end rather than throwing', () =>
 test('names the file and points at a line', () => {
   assert.throws(
     () => parseJsonc('{\n  "a": 1\n  "b": 2\n}', 'cfg.json'),
-    (error) =>
-      error.message.startsWith('cfg.json:') && /line \d+/.test(error.message),
+    (error) => error.message.startsWith('cfg.json:') && /line \d+/.test(error.message),
   )
 })
