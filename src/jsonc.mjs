@@ -117,10 +117,7 @@ const locate = (text, message) => {
 
   const position = /at position (\d+)/.exec(message)
   if (position) {
-    return message.replace(
-      /at position \d+/,
-      `at ${lineCol(Number(position[1]))}`,
-    )
+    return message.replace(/at position \d+/, `at ${lineCol(Number(position[1]))}`)
   }
 
   /* `Unexpected token '}', ..."anels": [ }" is not valid JSON` — V8 quotes

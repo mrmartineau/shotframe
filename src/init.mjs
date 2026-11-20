@@ -18,10 +18,7 @@ import { dirname, join, relative, resolve } from 'node:path'
 const schemaPath = (configDir) => {
   let dir = resolve(configDir)
   while (true) {
-    const candidate = join(
-      dir,
-      'node_modules/@mrmartineau/shotframe/schema.json',
-    )
+    const candidate = join(dir, 'node_modules/@mrmartineau/shotframe/schema.json')
     if (existsSync(candidate)) {
       const rel = relative(configDir, candidate)
       return rel.startsWith('.') ? rel : `./${rel}`

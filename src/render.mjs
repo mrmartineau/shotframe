@@ -18,8 +18,7 @@ const escapeHtml = (text) =>
     .replace(/"/g, '&quot;')
 
 /** `2 * 1.12 * 30px` — the space held for a block of copy whether it fills it or not. */
-const reserved = (lines, { leading, size }) =>
-  `calc(${lines} * ${leading} * ${size}px)`
+const reserved = (lines, { leading, size }) => `calc(${lines} * ${leading} * ${size}px)`
 
 export const buildCss = (config) => {
   const { device, theme, bezel, type, layout } = config

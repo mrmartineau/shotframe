@@ -16,9 +16,7 @@ import { runInit } from '../src/init.mjs'
 import { plural } from '../src/plural.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
-const { version } = JSON.parse(
-  readFileSync(join(here, '../package.json'), 'utf8'),
-)
+const { version } = JSON.parse(readFileSync(join(here, '../package.json'), 'utf8'))
 
 /* `.jsonc` first, because the format allows comments and that extension is
    the one editors and linters already understand as JSON-with-comments — a
@@ -145,9 +143,7 @@ const main = () => {
     return
   }
 
-  console.log(
-    `\n${plural(result.written.length, 'screenshot')} → ${short(config.out)}/`,
-  )
+  console.log(`\n${plural(result.written.length, 'screenshot')} → ${short(config.out)}/`)
 }
 
 try {

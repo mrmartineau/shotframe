@@ -1,31 +1,25 @@
 {
   "name": "@mrmartineau/shotframe",
   "version": "0.1.0",
-  "type": "module",
   "description": "App Store screenshots from raw simulator captures: a device frame, a heading and a line of copy, rendered at exactly the size the store wants.",
   "keywords": [
     "app-store",
-    "screenshots",
+    "cli",
+    "device-frame",
     "fastlane",
     "ios",
-    "device-frame",
-    "cli"
+    "screenshots"
   ],
+  "homepage": "https://github.com/mrmartineau/shotframe#readme",
+  "bugs": "https://github.com/mrmartineau/shotframe/issues",
   "license": "MIT",
   "author": "Zander Martineau <hi@zander.wtf> (https://zander.wtf)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mrmartineau/shotframe.git"
   },
-  "homepage": "https://github.com/mrmartineau/shotframe#readme",
-  "bugs": "https://github.com/mrmartineau/shotframe/issues",
   "bin": {
     "shotframe": "bin/shotframe.mjs"
-  },
-  "exports": {
-    ".": "./src/index.mjs",
-    "./schema.json": "./schema.json",
-    "./package.json": "./package.json"
   },
   "files": [
     "bin",
@@ -35,6 +29,12 @@
     "README.md",
     "LICENSE"
   ],
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./schema.json": "./schema.json",
+    "./package.json": "./package.json"
+  },
   "publishConfig": {
     "access": "public"
   },
